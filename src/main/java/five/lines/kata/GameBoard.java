@@ -15,14 +15,16 @@ public class GameBoard extends JPanel implements ActionListener {
     private static final int TILE_SIZE = 30;
     private static final Stack<Input> inputs = new Stack<>();
 
-    private final Tile[][] map = {
-            {UNBREAKABLE, UNBREAKABLE, UNBREAKABLE, UNBREAKABLE, UNBREAKABLE, UNBREAKABLE, UNBREAKABLE, UNBREAKABLE},
-            {UNBREAKABLE, PLAYER, AIR, FLUX, FLUX, UNBREAKABLE, AIR, UNBREAKABLE},
-            {UNBREAKABLE, STONE, UNBREAKABLE, BOX, FLUX, UNBREAKABLE, AIR, UNBREAKABLE},
-            {UNBREAKABLE, KEY1, STONE, FLUX, FLUX, UNBREAKABLE, AIR, UNBREAKABLE},
-            {UNBREAKABLE, STONE, FLUX, FLUX, FLUX, LOCK1, AIR, UNBREAKABLE},
-            {UNBREAKABLE, UNBREAKABLE, UNBREAKABLE, UNBREAKABLE, UNBREAKABLE, UNBREAKABLE, UNBREAKABLE, UNBREAKABLE},
-    };
+    private final int[][] intMap = {
+            {2, 2, 2, 2, 2, 2, 2, 2},
+            {2, 3, 0, 1, 1, 2, 0, 2},
+            {2, 4, 2, 6, 1, 2, 0, 2},
+            {2, 8, 4, 1, 1, 2, 0, 2},
+            {2, 4, 1, 1, 1, 9, 0, 2},
+            {2, 2, 2, 2, 2, 2, 2, 2},
+            };
+
+    private Tile[][] map;
 
     private int playerx = 1;
     private int playery = 1;
@@ -32,8 +34,61 @@ public class GameBoard extends JPanel implements ActionListener {
         this.setBackground(Color.WHITE);
         this.setFocusable(true);
         this.addKeyListener(new MyKey());
+        transformMap();
         Timer timer = new Timer(33, this);
         timer.start();
+    }
+
+    private void transformMap() {
+        map = new Tile[intMap.length][];
+        for (int y = map.length - 1; y >= 0; y--) {
+            map[y] = new Tile[intMap[y].length];
+            for (int x = 0; x < map[y].length; x++) {
+                map[y][x] = transformTile(intMap[y][x]);
+            }
+        }
+    }
+
+    private Tile transformTile(int tile) {
+        switch (tile) {
+            case 0 -> {
+                return AIR;
+            }
+            case 1 -> {
+                return FLUX;
+            }
+            case 2 -> {
+                return UNBREAKABLE;
+            }
+            case 3 -> {
+                return PLAYER;
+            }
+            case 4 -> {
+                return STONE;
+            }
+            case 5 -> {
+                return FALLING_STONE;
+            }
+            case 6 -> {
+                return BOX;
+            }
+            case 7 -> {
+                return FALLING_BOX;
+            }
+            case 8 -> {
+                return KEY1;
+            }
+            case 9 -> {
+                return LOCK1;
+            }
+            case 10 -> {
+                return KEY2;
+            }
+            case 11 -> {
+                return LOCK2;
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + tile);
+        }
     }
 
     public void paintComponent(Graphics graphic) {
