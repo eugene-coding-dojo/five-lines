@@ -182,17 +182,17 @@ public class GameBoard extends JPanel implements ActionListener {
         for (int y = 0; y < map.length; y++) {
             for (int x = 0; x < map[y].length; x++) {
                 if (map[y][x]==Tile.FLUX)
-                    g.setColor(Color.GREEN);
+                    g.setColor(Color.decode("#ccffcc"));
                 else if (map[y][x]==UNBREAKABLE)
-                    g.setColor(Color.BLACK);
+                    g.setColor(Color.decode("#999999"));
                 else if (map[y][x]==Tile.STONE || map[y][x]==Tile.FALLING_STONE)
-                    g.setColor(Color.LIGHT_GRAY);
+                    g.setColor(Color.decode("#0000cc"));
                 else if (map[y][x]==Tile.BOX || map[y][x]==Tile.FALLING_BOX)
-                    g.setColor(Color.PINK);
+                    g.setColor(Color.decode("#8b4513"));
                 else if (map[y][x]==Tile.KEY1 || map[y][x]==Tile.LOCK1)
-                    g.setColor(Color.YELLOW);
+                    g.setColor(Color.decode("#ffcc00"));
                 else if (map[y][x]==Tile.KEY2 || map[y][x]==Tile.LOCK2)
-                    g.setColor(Color.ORANGE);
+                    g.setColor(Color.decode("#00ccff"));
 
                 if (map[y][x]!=Tile.AIR && map[y][x]!=Tile.PLAYER)
                     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
@@ -200,7 +200,7 @@ public class GameBoard extends JPanel implements ActionListener {
         }
 
         // Draw player
-        g.setColor(Color.RED);
+        g.setColor(Color.decode("#ff0000"));
         g.fillRect(playerx * TILE_SIZE, playery * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
 
